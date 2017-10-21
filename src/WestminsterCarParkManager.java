@@ -22,7 +22,7 @@ public class WestminsterCarParkManager implements CarParkManager {
     static int carCounter;
     static int vanCounter;
     static int bikeCounter;
-    
+
 
     static EmptyParkingSlot emptySlot = new EmptyParkingSlot("Empty");
 
@@ -48,12 +48,12 @@ public class WestminsterCarParkManager implements CarParkManager {
         WestminsterCarParkManager westminsterCarPark = new WestminsterCarParkManager();
 
         //calling the method which displays the main menu of the program
-        westminsterCarPark.display();
+        westminsterCarPark.displayMainMenu();
 
     }
 
     //Method which displays the main menu to the user
-    public void display(){
+    public void displayMainMenu(){
         try {
             sc = new Scanner(System.in);
             //to hold the user's selection from the main menu
@@ -63,7 +63,7 @@ public class WestminsterCarParkManager implements CarParkManager {
             WestminsterCarParkManager westminsterCarParkManager = new WestminsterCarParkManager();
 
 
-            System.out.println("- - - - - - - - - - - Main Menu- - - - - - - - - - - ");
+            System.out.println("~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ Main Menu ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ");
 
             System.out.println();
             System.out.println("1. Add a new Vehicle");
@@ -88,19 +88,19 @@ public class WestminsterCarParkManager implements CarParkManager {
                     westminsterCarParkManager.deleteVehicle();
                     break;
                 case 3:
-                    westminsterCarParkManager.printList();
+                    westminsterCarParkManager.printVehicleList();
                     break;
                 case 4:
-                    westminsterCarParkManager.percentages();
+                    westminsterCarParkManager.calculatePercentages();
                     break;
                 case 5:
-                    westminsterCarParkManager.vehicleStats();
+                    westminsterCarParkManager.displayVehicleStats();
                     break;
                 case 6:
-                    westminsterCarParkManager.parkingLog();
+                    westminsterCarParkManager.displayParkingLog();
                     break;
                 case 7:
-                    westminsterCarParkManager.parkingCharges();
+                    westminsterCarParkManager.calculateParkingCharges();
                     break;
                 case 0:
                     System.exit(0);
@@ -108,7 +108,7 @@ public class WestminsterCarParkManager implements CarParkManager {
                 default:
                     System.err.println("\nYou have entered an invalid option!");
                     System.out.println();
-                    display();
+                    displayMainMenu();
                     break;
 
             }
@@ -117,7 +117,7 @@ public class WestminsterCarParkManager implements CarParkManager {
             System.out.println("\nInvalid option!");
             //to destroy if there are ant type mismatch exceptions
             sc.hasNextInt();
-            display();
+            displayMainMenu();
         }
 
     }
@@ -349,6 +349,8 @@ public class WestminsterCarParkManager implements CarParkManager {
                 //getIndexProperty method will return an integer
                 String leavingVehicle = slots.get(getIndexByProperty(deleteVehicle)).getVehicleType();
                 System.out.println("\nA " + leavingVehicle + " is leaving the park.");
+
+                //to validate type of the vehicle which is getting ready to leave the park
                 if (leavingVehicle.equals("Car")) {
                     parkingSlotCount++;
                     carCounter--;
@@ -366,39 +368,41 @@ public class WestminsterCarParkManager implements CarParkManager {
                 //catches the indexoutofbound exception
             }
         }
-        returnToMenu(); //prompt the exit options
+        returnToMenu();
 
     }
     //returns the index of the desired vehicle
     private int getIndexByProperty(String yourString) {
         for (int i = 0; i < slots.size(); i++) {
             if (slots.get(i).getIdPlate() !=null && slots.get(i).getIdPlate().equalsIgnoreCase(yourString)) {
-                //System.out.println(i);
+                //to track if that id is in the list
                 return i;
             }
         }
         System.out.println("\nSorry! There's no vehicle in the park with the specified ID plate.\n");
-        return -1;// not there is list
+        //to track which is not in the list
+        return -1;
     }
 
 
 
-    //print list method
-    public void printList(){
+    //this will print the currently parked vehicles
+    public void printVehicleList(){ //implements the method of interface CarParkManger
         System.out.println();
-        System.out.println("- - - - - - - - List of Vehicles in the Parking - - - - - - - - \n ");
+        System.out.println("# # # # # # # # List of Vehicles in the Parking # # # # # # # #\n ");
 
-        float totalVehicles = (carCounter+vanCounter+bikeCounter);
+        float totalVehiclesCount = (carCounter+vanCounter+bikeCounter);
 
-        if (totalVehicles==0) {
-            System.out.println("The parking is empty at the moment! Please try again later.");
+        if (totalVehiclesCount==0) {
+            System.out.println("There are no vehicles parked in the park at the moment!");
 
         }else {
 
             sortArraylist();
-            //makes it in the descending order
+            //this will Sortit in the descending order
             Collections.reverse(slots);
 
+            //to print the parked vehicle list at the moment
             for (Vehicle vehicle : slots) {
 
                 System.out.println("ID Plate - "+ vehicle.getIdPlate() + " " +
@@ -408,11 +412,13 @@ public class WestminsterCarParkManager implements CarParkManager {
                         vehicle.getDateTime().getSecond() + " The type of the vehicle - "+ vehicle.getVehicleType());
             }
         }
-        returnToMenu(); //prompt the exit options
+        returnToMenu();
 
     }
-    //sort the arraylist in the ascending order based on date time
+
+    //method which sorts the arraylist in the ascending order depending on date time
     public void sortArraylist(){
+
         //sorts the date and time both and returns 0, -1 or 1
         Collections.sort(slots, (p1, p2) -> {
             int value;
@@ -430,34 +436,38 @@ public class WestminsterCarParkManager implements CarParkManager {
             return value;
         });
     }
-    //to find the percentages of vehicles
-    public void percentages(){
+
+    //Method which finds the percentages of vehicles
+    public void calculatePercentages(){
         float carPercentage,vanPercentage,bikePercentage;
 
         System.out.println();
-        System.out.println("- - - - - - - Percentage of Vehicles in the parking - - - - - - - \n ");
+        System.out.println("# # # # # # # Percentage of Vehicles in the parking # # # # # # # \n ");
 
+        //to hold the total vehicle count
         float totalVehicles = (carCounter+vanCounter+bikeCounter);
 
         if (totalVehicles==0) {
-            System.out.println("The parking is empty at the moment! Please try again later.");
+            System.out.println("There are no vehicles parked in the park at the moment!");
 
         }else {
+            //this will calculate the percentage of the parked vehicles in the carpark
             carPercentage = (carCounter * 100) / totalVehicles;
             vanPercentage = (vanCounter * 100) / totalVehicles;
             bikePercentage = (bikeCounter * 100) / totalVehicles;
 
-            System.out.println("The percentage of Cars are " + carPercentage + "%");
-            System.out.println("The percentage of Vans are " + vanPercentage + "%");
-            System.out.println("The percentage of Motorbikes are " + bikePercentage + "%\n");
+            //print the percentages
+            System.out.println("The percentage of parked-Cars are " + carPercentage + "%");
+            System.out.println("The percentage of parked-Vans are " + vanPercentage + "%");
+            System.out.println("The percentage of parked-Motorbikes are " + bikePercentage + "%\n");
         }
-        returnToMenu(); //prompt the exit options
+        returnToMenu();
     }
 
-    //Vehicle stats
-    public void vehicleStats(){
+    //method which displayMainMenu vehicle statistics of the carpark
+    public void displayVehicleStats(){
         System.out.println();
-        System.out.println("- - - - - - - - Vehicle statistics - - - - - - - - \n ");
+        System.out.println("# # # # # # # # Vehicle statistics # # # # # # # # \n ");
 
         float totalVehicles = (carCounter+vanCounter+bikeCounter);
 
@@ -489,7 +499,7 @@ public class WestminsterCarParkManager implements CarParkManager {
     }
 
     //Calculates the parking charges
-    public void parkingCharges(){
+    public void calculateParkingCharges(){
         String timeString;
         String[] time;
 
@@ -499,7 +509,7 @@ public class WestminsterCarParkManager implements CarParkManager {
         String inputTime;
 
         System.out.println();
-        System.out.println("- - - - - - - - Parking Charges - - - - - - - - \n ");
+        System.out.println("# # # # # # # # Parking Charges # # # # # # # # \n ");
 
         float totalVehicles = (carCounter+vanCounter+bikeCounter);
 
@@ -515,7 +525,7 @@ public class WestminsterCarParkManager implements CarParkManager {
                 timeString = sc.next();
                 time = timeString.split(":");
 
-                //display an error if the time is invalid
+                //displayMainMenu an error if the time is invalid
                 if (Integer.parseInt(time[0]) >= 24 || Integer.parseInt(time[1]) >= 60 || Integer.parseInt(time[2]) >= 60) {
                     System.out.println("\n Invalid time. Please try again.\n ");
                     continue;
@@ -530,7 +540,7 @@ public class WestminsterCarParkManager implements CarParkManager {
                 dateString = sc.next();
                 date = dateString.split("-");
 
-                //display an error if the date is invalid
+                //displayMainMenu an error if the date is invalid
                 if (Integer.parseInt(date[1]) > 12 || Integer.parseInt(date[2]) > 31) {
                     System.out.println("\n Invalid date. Please try again.\n ");
                     continue;
@@ -561,9 +571,9 @@ public class WestminsterCarParkManager implements CarParkManager {
                     case 1:
                         String leftAlignFormat = "| %-17s | %-17d |%n";
 
-                        System.out.format("+-------------------+-------------------+%n");
+                        System.out.format("+~~~~~~~~~~~~~~~~~~~+~~~~~~~~~~~~~~~~~~~+%n");
                         System.out.format("| Vehicle ID Plate  |  Total Charge (£) |%n");
-                        System.out.format("+-------------------+-------------------+%n");
+                        System.out.format("+~~~~~~~~~~~~~~~~~~~+~~~~~~~~~~~~~~~~~~~+%n");
 
                         for (int i =0;i<slots.size();i++){
                             String vehicleTime;
@@ -621,9 +631,9 @@ public class WestminsterCarParkManager implements CarParkManager {
 
                         try{
 
-                            System.out.format("+-------------------+-------------------+%n");
+                            System.out.format("+~~~~~~~~~~~~~~~~~~~+~~~~~~~~~~~~~~~~~~~+%n");
                             System.out.format("| Vehicle ID Plate  |  Total Charge (£) |%n");
-                            System.out.format("+-------------------+-------------------+%n");
+                            System.out.format("+~~~~~~~~~~~~~~~~~~~+~~~~~~~~~~~~~~~~~~~+%n");
 
                             String vehicleTime;
                             long totalCost = 0;
@@ -672,17 +682,17 @@ public class WestminsterCarParkManager implements CarParkManager {
 
                     default:
                         System.out.println("\nInvalid option!");
-                        display(); //return
+                        displayMainMenu(); //return
                         break;
                 }
 
             }catch (Exception ex3){
                 System.out.println("\nInvalid option!");
-                display(); //return
+                displayMainMenu(); //return
             }
 
 
-            System.out.format("+-------------------+-------------------+%n");
+            System.out.format("+~~~~~~~~~~~~~~~~~~~+~~~~~~~~~~~~~~~~~~~+%n");
             System.out.println("\nRates - First 3 hours - 3£ per hour , Starting from 4th Hour - 4£ per hour"
                     + "\n\n\t NOTE - The maximum charge for any 24 hour periods is 30£");
         }
@@ -727,7 +737,7 @@ public class WestminsterCarParkManager implements CarParkManager {
                 timeString = sc.next();
                 time = timeString.split(":");
 
-                //display an error if the time is invalid
+                //displayMainMenu an error if the time is invalid
                 if (Integer.parseInt(time[0]) >= 24 || Integer.parseInt(time[1]) >= 60 || Integer.parseInt(time[2]) >= 60) {
                     System.out.println("\n Invalid time. Please try again.\n ");
                     continue;
@@ -760,7 +770,7 @@ public class WestminsterCarParkManager implements CarParkManager {
                 dateString = sc.next();
                 date = dateString.split("-");
 
-                //display an error if the date is invalid
+                //displayMainMenu an error if the date is invalid
                 if (Integer.parseInt(date[1]) > 12 || Integer.parseInt(date[2]) > 31) {
                     System.out.println("\n Invalid date. Please try again.\n ");
                     continue;
@@ -819,15 +829,19 @@ public class WestminsterCarParkManager implements CarParkManager {
         }
     }
 
-    //Retrieving the previous parking details
-    public void parkingLog(){
+    //Method to retrieving the previous parking records from the text files
+    public void displayParkingLog(){
         System.out.println();
-        System.out.println("- - - - - - - - Parking Log - - - - - - - - \n ");
+        System.out.println("# # # # # # # # Parking Log # # # # # # # # \n ");
+        System.out.println("");
         System.out.print("Please enter the specific Day - ");
 
+        //to hold the the date month and year
         int enteredDay=0,enteredMonth=0,enteredYear=0;
 
         enteredDay = sc.nextInt();
+
+        //validations for the entered data
         if(enteredDay<=31) {
             System.out.print("Please enter the specific Month - ");
             enteredMonth=sc.nextInt();
@@ -836,29 +850,32 @@ public class WestminsterCarParkManager implements CarParkManager {
                 enteredYear = sc.nextInt();
             }else {
                 System.out.println("Invalid month! Please try again.");
-                parkingLog();
+                displayParkingLog();
             }
         }else {
             System.out.println("Invalid date! Please try again.");
-            parkingLog();
+            displayParkingLog();
         }
         System.out.println("");
 
+        //to retrieve/read data from the stored txt file depending on the date
         String fileName = String.valueOf(enteredYear)+"-"+String.valueOf(enteredMonth)+"-"+String.valueOf(enteredDay)+".txt";
+
+        //reading file which has the user entered date as its file name
         fileReading(fileName);
-        returnToMenu(); //prompt the exit options
+        returnToMenu();
 
     }
 
-    //Method to read the file
+    //Method which reads data from txt files
     public static void fileReading(String fileName) {
 
-        //instance of the buffer reader
+        //obj of the buffer reader
         BufferedReader br = null;
 
         try {
-            //current line
-            String line;
+            //to store the current line of the file
+            String currentLine;
             br = new BufferedReader(new FileReader(fileName));
 
             if(!isEmptyFile(fileName)) {
@@ -870,9 +887,9 @@ public class WestminsterCarParkManager implements CarParkManager {
                 System.out.format("|  Parked Date  |  Parked Time  | Vehicle ID Plate |  Vehicle Brand  |%n");
                 System.out.format("+---------------+---------------+------------------+-----------------+%n");
                 //reading line by line until the line becomes null
-                while ((line = br.readLine()) != null) {
+                while ((currentLine = br.readLine()) != null) {
                     //splitting the line
-                    String[] lineParts = line.split("/", -1);
+                    String[] lineParts = currentLine.split("/", -1);
                     //assigning the parts of the line
                     String date = lineParts[0];
                     String time = lineParts[1];
@@ -913,29 +930,32 @@ public class WestminsterCarParkManager implements CarParkManager {
         return true;
     }
 
-    //method for the exist option
+    //method to continue with main menu if the option exist
     public void returnToMenu(){
         try {
 
-            System.out.println("\n\tWould you like to go back to the main menu?\n");
-            System.out.println("\tPlease select \t 1. Yes \t 2. No");
+            System.out.println("\n\tDo you want to continue with main menu?\n");
+            System.out.println(" Please select your option \n 1. Yes \n 2. No");
 
             switch (sc.nextInt() ){
+                //will go to the main menu
                 case 1:
-                    display(); //return
+                    displayMainMenu();
                     break;
+                //will terminate the program
                 case 2:
                     System.exit(0);
                     break;
+                //to track invalid options
                 default:
                     System.out.println("\nInvalid option!");
-                    display(); //return
+                    displayMainMenu();
                     break;
             }
 
         }catch (Exception ex3){
             System.out.println("\nInvalid option!");
-            display(); //return
+            displayMainMenu(); //return
         }
 
 

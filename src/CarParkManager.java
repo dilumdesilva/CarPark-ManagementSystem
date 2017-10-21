@@ -3,12 +3,12 @@
  */
 public interface CarParkManager  {
 
-    void display();
+    void displayMainMenu();
     void addVehicle();
     void deleteVehicle();
-    void printList();
-    void percentages();
-    void vehicleStats();
-    void parkingCharges();
-    void parkingLog();
+    void printVehicleList();
+    void calculatePercentages();
+    void displayVehicleStats();
+    void calculateParkingCharges();
+    void displayParkingLog();
 }
