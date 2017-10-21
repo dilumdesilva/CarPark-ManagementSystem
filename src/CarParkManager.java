@@ -1,8 +1,11 @@
 /**
  * OOP CW01 by Dilum De Silva (IIT NO - 2016142)
  */
-public interface CarParkManager  {
 
+
+public interface CarParkManager  {
+//interface of the system
+    
     void displayMainMenu();
     void addVehicle();
     void deleteVehicle();

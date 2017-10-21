@@ -3,9 +3,12 @@ import java.util.Comparator;
 /**
  * OOP CW01 by Dilum De Silva (IIT NO - 2016142)
  */
-public abstract class Vehicle{
 
-    //instance variables
+
+public abstract class Vehicle{
+//abstract class of the all vehicle types
+
+    //instance variables to store common data of a vehicle
     public String vehicleType;
     public String idPlate;
     public String vehicleBrand;

@@ -3,15 +3,22 @@ import java.util.Comparator;
 /**
  * OOP CW01 by Dilum De Silva (IIT NO - 2016142)
  */
+
 public class DateTime {
 
+    //class which holds all the functions related to DateTime
+
+    //varibles to hold attributes of the time
     private int second;
     private int minute;
     private int hour;
 
+    //variables to hold attributes if the date
     private int year;
     private int month;
     private int day;
+
+
 
     public int getSecond() {
         return second;

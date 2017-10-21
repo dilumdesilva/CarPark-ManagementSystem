@@ -3,6 +3,7 @@
  */
 public class Motorbike extends Vehicle {
 
+    //this class includes all the methods to implement functions related to motorbike
     private String engineCapacity;
 
     public String getEngineCapacity() {
@@ -13,7 +14,7 @@ public class Motorbike extends Vehicle {
         this.engineCapacity = engineCapacity;
     }
 
-    //implementing the abstract methods in the vehicle class
+    //abstract methods which are in the vehicle class
     public String getVehicleType() {return vehicleType;}
 
     public void setVehicleType(String vehicleType) {this.vehicleType = vehicleType;}

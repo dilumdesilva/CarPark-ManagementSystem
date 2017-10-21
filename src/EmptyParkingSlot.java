@@ -1,7 +1,9 @@
 /**
  * OOP CW01 by Dilum De Silva (IIT NO - 2016142)
  */
+
 public class EmptyParkingSlot extends Vehicle{
+
     private String availability;
 
     public EmptyParkingSlot(String availability){
@@ -31,7 +33,7 @@ public class EmptyParkingSlot extends Vehicle{
 
     }
 
-    //implementing the abstract methods in the vehicle class
+    //abstract methods which are in the vehicle class
     public String getIdPlate() {return idPlate;}
 
     public void setIdPlate(String idPlate) {
