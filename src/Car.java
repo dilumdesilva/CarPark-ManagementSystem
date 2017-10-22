@@ -3,7 +3,7 @@ public class Car extends Vehicle {
     //this class includes all the methods to implement functions related to car
 
     private int numDoors;
-    private String Color;
+    private String carColor;
 
     public int getNumDoors() {
         return numDoors;
@@ -13,12 +13,12 @@ public class Car extends Vehicle {
         this.numDoors = numDoors;
     }
 
-    public String getColor() {
-        return Color;
+    public String getCarColor() {
+        return carColor;
     }
 
-    public void setColor(String color) {
-        Color = color;
+    public void setCarColor(String carColor) {
+        this.carColor = carColor;
     }
 
     //abstract methods which are in the vehicle class

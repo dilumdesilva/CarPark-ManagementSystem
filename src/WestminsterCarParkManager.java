@@ -26,8 +26,7 @@ public class WestminsterCarParkManager implements CarParkManager {
 
     static EmptyParkingSlot emptySlot = new EmptyParkingSlot("Empty");
 
-    //Creating 20 slots initializing it with null
-    //static List<Vehicle> slots = new ArrayList<Vehicle>(Collections.<Vehicle>nCopies(20, emptySlot));
+    //slots list to hold parking slots
     static List<Vehicle> slots = new ArrayList<Vehicle>();
 
 
@@ -178,7 +177,7 @@ public class WestminsterCarParkManager implements CarParkManager {
 
                         //getting the color of the car
                         System.out.println("Please enter the Color of the Car");
-                        car.setColor(sc.next());
+                        car.setCarColor(sc.next());
 
                         //set the datetime object to the car
                         car.setDateTime(dateTime);
@@ -677,18 +676,21 @@ public class WestminsterCarParkManager implements CarParkManager {
 
                         } catch (Exception e) {
                             //catches the indexoutofbound exception
+                            System.out.println("indexoutofbound exception");
                         }
                         break;
 
                     default:
                         System.out.println("\nInvalid option!");
-                        displayMainMenu(); //return
+                        //return to main menu
+                        displayMainMenu();
                         break;
                 }
 
             }catch (Exception ex3){
                 System.out.println("\nInvalid option!");
-                displayMainMenu(); //return
+                //return to main menu
+                displayMainMenu();
             }
 
 
@@ -710,6 +712,7 @@ public class WestminsterCarParkManager implements CarParkManager {
             date = formatter.parse(dateInString.replaceAll("Z$", "+0000"));
 
         } catch (ParseException e) {
+            //printing the exception
             e.printStackTrace();
         }
         return date;
@@ -883,9 +886,9 @@ public class WestminsterCarParkManager implements CarParkManager {
 
                 String leftAlignFormat = "| %-13s | %-13s | %-16s | %-15s | %n";
 
-                System.out.format("+---------------+---------------+------------------+-----------------+%n");
+                System.out.format("+~~~~~~~~~~~~~~~+~~~~~~~~~~~~~~~+~~~~~~~~~~~~~~~~~~+~~~~~~~~~~~~~~~~~+%n");
                 System.out.format("|  Parked Date  |  Parked Time  | Vehicle ID Plate |  Vehicle Brand  |%n");
-                System.out.format("+---------------+---------------+------------------+-----------------+%n");
+                System.out.format("+~~~~~~~~~~~~~~~+~~~~~~~~~~~~~~~+~~~~~~~~~~~~~~~~~~+~~~~~~~~~~~~~~~~~+%n");
                 //reading line by line until the line becomes null
                 while ((currentLine = br.readLine()) != null) {
                     //splitting the line
@@ -898,7 +901,7 @@ public class WestminsterCarParkManager implements CarParkManager {
 
                     System.out.format(leftAlignFormat, date, time,id,brand);
                 }
-                System.out.format("+---------------+---------------+------------------+-----------------+%n");
+                System.out.format("+~~~~~~~~~~~~~~~~+~~~~~~~~~~~~~~~+~~~~~~~~~~~~~~~~~~+~~~~~~~~~~~~~~~~~+%n");
                 //System.out.println("\nAll the data was successfully loaded from the text file. \n");
             }else {
                 System.out.println("No vehicle was parked on "+fileName);
