@@ -8,9 +8,9 @@ In this system, I have implemented the following functionality:  Design and impl
 The classes should include appropriate methods and hold information about the ID plate of the vehicle, the brand of the vehicle and the entry time/date in the parking.
 In particular:
 
-##• The Car class includes appropriate methods and hold information about the number of the doors of the car and the color.
-##• The Van class includes methods and information about the cargo volume of the van.
-##• The class Motorbike has methods and information about the size engine of the motorbike. 
+#• The Car class includes appropriate methods and hold information about the number of the doors of the car and the color.
+#• The Van class includes methods and information about the cargo volume of the van.
+#• The class Motorbike has methods and information about the size engine of the motorbike. 
 
 I have implemented a class DateTime to represent the time/date of the entrance of the vehicle in the parking. Instead of predefined date/time library.
 
